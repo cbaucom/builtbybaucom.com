@@ -1,0 +1,22 @@
+{
+	"customSyntax": "postcss-styled-syntax",
+	"extends": [
+		"stylelint-config-standard",
+		"stylelint-config-styled-components"
+	],
+	"plugins": [
+		"stylelint-order"
+	],
+	"rules": {
+		"no-missing-end-of-source-newline": false,
+		"order/properties-alphabetical-order": true,
+		"value-keyword-case": [
+			"lower",
+			{
+				"ignoreProperties": [
+					"/^\\$./"
+				]
+			}
+		]
+	}
+}

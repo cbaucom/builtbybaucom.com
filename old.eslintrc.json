@@ -1,0 +1,44 @@
+{
+  "extends": [
+    "next/core-web-vitals"
+  ],
+  "plugins": [
+    "sort-keys-fix"
+  ],
+  "rules": {
+    // Sort object literal keys alphabetically
+    "sort-keys": [
+      "error",
+      "asc",
+      {
+        "caseSensitive": true,
+        "minKeys": 2,
+        "natural": true
+      }
+    ],
+    // Sort destructured properties alphabetically
+    "sort-keys-fix/sort-keys-fix": [
+      "error",
+      {
+        "caseSensitive": true
+      }
+    ],
+    // Sort type union/intersection members alphabetically
+    "@typescript-eslint/sort-type-constituents": "error",
+    // Sort class members alphabetically
+    "@typescript-eslint/member-ordering": [
+      "error",
+      {
+        "default": {
+          "memberTypes": [
+            "signature",
+            "field",
+            "constructor",
+            "method"
+          ],
+          "order": "alphabetically"
+        }
+      }
+    ]
+  }
+}
