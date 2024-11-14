@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Send } from 'lucide-react';
-
+import { Button } from './Button';
+import { ButtonContainer } from '@/styles/common';
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -41,31 +42,6 @@ const Textarea = styled.textarea`
   &:focus {
     border-color: ${(props) => props.theme.colors.primary};
     outline: none;
-  }
-`;
-
-const Button = styled.button`
-  align-items: center;
-  background: ${(props) => props.theme.colors.secondary};
-  border: none;
-  border-radius: 4px;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  font-size: ${(props) => props.theme.fontSizes.md};
-  font-weight: 500;
-  gap: ${(props) => props.theme.space.sm};
-  justify-content: center;
-  padding: ${(props) => props.theme.space.sm} ${(props) => props.theme.space.md};
-  transition: background 0.2s ease;
-
-  &:hover {
-    background: ${(props) => props.theme.colors.primary};
-  }
-
-  &:disabled {
-    background: ${(props) => props.theme.colors.muted};
-    cursor: not-allowed;
   }
 `;
 
@@ -148,6 +124,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
+              placeholder="Your name"
               required
             />
           </FormGroup>
@@ -160,6 +137,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
+              placeholder="Your email"
               required
             />
           </FormGroup>
@@ -173,6 +151,7 @@ export const ContactForm = ({ className }: ContactFormProps) => {
             onChange={(e) =>
               setFormData({ ...formData, subject: e.target.value })
             }
+            placeholder="Subject"
             required
           />
         </FormGroup>
@@ -184,13 +163,25 @@ export const ContactForm = ({ className }: ContactFormProps) => {
             onChange={(e) =>
               setFormData({ ...formData, message: e.target.value })
             }
+            placeholder="Your message..."
             required
           />
         </FormGroup>
-        <Button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Sending...' : 'Send Message'}
-          <Send size={18} />
-        </Button>
+        <ButtonContainer>
+          <Button
+            disabled={
+              isSubmitting ||
+              !formData.name ||
+              !formData.email ||
+              !formData.subject ||
+              !formData.message
+            }
+            type="submit"
+          >
+            {isSubmitting ? 'Sending...' : 'Send Message'}
+            <Send size={18} />
+          </Button>
+        </ButtonContainer>
       </Form>
     </div>
   );

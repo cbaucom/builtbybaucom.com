@@ -27,6 +27,7 @@ declare module 'styled-components' {
 			'5xl': string;
 		};
 		space: {
+			xxs: string;
 			xs: string;
 			sm: string;
 			md: string;

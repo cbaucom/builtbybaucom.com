@@ -1,12 +1,16 @@
 import styled from 'styled-components';
 import { format } from 'date-fns';
 import { Calendar, Clock, Tag } from 'lucide-react';
-import { getFiles, getPost, getAllPosts, getAdjacentPosts } from '@/lib/mdx';
-import { MDXRemote } from 'next-mdx-remote';
+import {
+  getAllPosts,
+  getBlogPostByYearAndSlug,
+  Post,
+  getAdjacentPosts,
+} from '@/lib/mdx';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
-import remarkGfm from 'remark-gfm';
-import { YouTube } from '@/components/YouTube';
 import { PostNavigation } from '@/components/PostNavigation';
+import { YouTube } from '@/components/YouTube';
 import Image from 'next/image';
 
 const Article = styled.article`
@@ -59,9 +63,9 @@ const Tags = styled.div`
 `;
 
 const TagItem = styled.span`
-  background: ${(props) => props.theme.colors.accent};
+  background: ${(props) => props.theme.colors.primary};
   border-radius: 4px;
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.background};
   font-size: ${(props) => props.theme.fontSizes.sm};
   padding: 2px 8px;
 `;
@@ -87,7 +91,7 @@ const Content = styled.div`
   }
 
   pre {
-    background: ${(props) => props.theme.colors.accent};
+    background: ${(props) => props.theme.colors.primary};
     border-radius: 8px;
     margin: ${(props) => props.theme.space.md} 0;
     overflow-x: auto;
@@ -113,7 +117,27 @@ const Content = styled.div`
   }
 `;
 
-export default function ProjectPost({ mdxSource, next, post, previous }: any) {
+interface BlogPostProps {
+  post: Post;
+  mdxSource: MDXRemoteSerializeResult;
+  previous: {
+    title: string;
+    slug: string;
+    date: string;
+  } | null;
+  next: {
+    title: string;
+    slug: string;
+    date: string;
+  } | null;
+}
+
+export default function BlogPost({
+  mdxSource,
+  next,
+  post,
+  previous,
+}: BlogPostProps) {
   const date = format(new Date(post.date), 'MMMM dd, yyyy');
 
   return (
@@ -142,7 +166,7 @@ export default function ProjectPost({ mdxSource, next, post, previous }: any) {
           </MetaItem>
         </Meta>
         <Tags>
-          {post.tags.map((tag: string) => (
+          {post.tags.map((tag) => (
             <TagItem key={tag}>{tag}</TagItem>
           ))}
         </Tags>
@@ -150,15 +174,18 @@ export default function ProjectPost({ mdxSource, next, post, previous }: any) {
       <Content>
         <MDXRemote {...mdxSource} components={{ YouTube }} />
       </Content>
-      <PostNavigation previous={previous} next={next} type="project" />
+      <PostNavigation previous={previous} next={next} type="blog" />
     </Article>
   );
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts('project');
+  const posts = getAllPosts('blog');
+
   const paths = posts.map((post) => ({
-    params: { slug: post.slug },
+    params: {
+      slug: [format(new Date(post.date), 'yyyy'), post.slug],
+    },
   }));
 
   return {
@@ -167,8 +194,13 @@ export async function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params }: { params: { slug: string } }) {
-  const post = getPost('project', params.slug);
+export async function getStaticProps({
+  params,
+}: {
+  params: { slug: string[] };
+}) {
+  const [year, slug] = params.slug;
+  const post = getBlogPostByYearAndSlug(year, slug);
 
   if (!post) {
     return {
@@ -176,14 +208,8 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
     };
   }
 
-  const mdxSource = await serialize(post.content, {
-    mdxOptions: {
-      rehypePlugins: [],
-      remarkPlugins: [remarkGfm],
-    },
-  });
-
-  const adjacentPosts = getAdjacentPosts('project', params.slug);
+  const mdxSource = await serialize(post.content);
+  const adjacentPosts = getAdjacentPosts('blog', slug, year);
 
   return {
     props: {

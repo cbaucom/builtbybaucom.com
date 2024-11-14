@@ -127,10 +127,25 @@ export function getPost(type: ContentType, slug: string, year?: string): Post | 
 
 export function getPaginatedPosts(type: ContentType, page: number, limit: number = 6) {
 	const posts = getAllPosts(type);
-	const totalPages = Math.ceil(posts.length / limit);
+	const totalPages = Math.max(1, Math.ceil(posts.length / limit));
 	const start = (page - 1) * limit;
 	const end = start + limit;
-	return { posts: posts.slice(start, end), currentPage: page, totalPages };
+
+	console.log({
+		type,
+		page,
+		totalPosts: posts.length,
+		totalPages,
+		start,
+		end,
+		postsSlice: posts.slice(start, end).length
+	});
+
+	return {
+		posts: posts.slice(start, end),
+		currentPage: page,
+		totalPages,
+	};
 }
 
 export function getBlogPostByYearAndSlug(year: string, slug: string): Post | null {

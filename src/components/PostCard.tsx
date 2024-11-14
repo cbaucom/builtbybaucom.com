@@ -8,6 +8,9 @@ const Card = styled.article`
   background: ${(props) => props.theme.colors.background};
   border: 1px solid ${(props) => props.theme.colors.accent};
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   overflow: hidden;
   transition:
     transform 0.2s ease,
@@ -40,14 +43,16 @@ const CoverImage = styled.img`
 `;
 
 const Content = styled.div`
-  padding: ${(props) => props.theme.space.sm};
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: ${(props) => props.theme.space.md};
 `;
 
 const Title = styled.h2`
   cursor: pointer;
   font-size: ${(props) => props.theme.fontSizes['2xl']};
-  margin-bottom: ${(props) => props.theme.space.sm};
-  margin-top: 0;
+  margin: 0 0 ${(props) => props.theme.space.sm} 0;
 
   a {
     color: ${(props) => props.theme.colors.text};
@@ -60,14 +65,19 @@ const Title = styled.h2`
 
 const Description = styled.p`
   color: ${(props) => props.theme.colors.muted};
-  margin-bottom: ${(props) => props.theme.space.md};
+  flex-grow: 1;
+  margin: 0;
 `;
 
 const Meta = styled.div`
+  border-top: 1px solid ${(props) => props.theme.colors.accent};
   color: ${(props) => props.theme.colors.muted};
   display: flex;
   font-size: ${(props) => props.theme.fontSizes.sm};
   gap: ${(props) => props.theme.space.md};
+  justify-content: space-between;
+  margin-top: ${(props) => props.theme.space.md};
+  padding-top: ${(props) => props.theme.space.md};
 `;
 
 const MetaItem = styled.span`
@@ -79,14 +89,14 @@ const MetaItem = styled.span`
 const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${(props) => props.theme.space.xs};
-  margin-top: ${(props) => props.theme.space.sm};
+  gap: ${(props) => props.theme.space.xxs};
+  margin-bottom: ${(props) => props.theme.space.md};
 `;
 
 const Tag = styled.span`
-  background: ${(props) => props.theme.colors.accent};
+  background: ${(props) => props.theme.colors.primary};
   border-radius: 4px;
-  color: ${(props) => props.theme.colors.text};
+  color: ${(props) => props.theme.colors.background};
   font-size: ${(props) => props.theme.fontSizes.xs};
   padding: 2px 8px;
 `;
@@ -117,6 +127,9 @@ export const PostCard = ({ post, type }: PostCardProps) => {
         <Title>
           <Link href={href}>{post.title}</Link>
         </Title>
+        <Tags>
+          {post.tags && post.tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}
+        </Tags>
         <Description>{post.description}</Description>
         <Meta>
           <MetaItem>
@@ -128,9 +141,6 @@ export const PostCard = ({ post, type }: PostCardProps) => {
             {readingTime}
           </MetaItem>
         </Meta>
-        <Tags>
-          {post.tags && post.tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}
-        </Tags>
       </Content>
     </Card>
   );

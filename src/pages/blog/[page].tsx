@@ -5,8 +5,9 @@ import { Pagination } from '@/components/Pagination';
 import type { Post } from '@/lib/mdx';
 
 const Title = styled.h1`
-  font-size: ${(props) => props.theme.fontSizes['4xl']};
-  margin-bottom: ${(props) => props.theme.space.xl};
+  font-size: ${(props) => props.theme.fontSizes['3xl']};
+  margin-bottom: ${(props) => props.theme.space.lg};
+  margin-top: ${(props) => props.theme.space.xs};
 `;
 
 const Grid = styled.div`
@@ -37,7 +38,7 @@ export default function BlogPage({
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
-        basePath="/blog/page"
+        basePath="/blog"
       />
     </>
   );
@@ -46,8 +47,9 @@ export default function BlogPage({
 export async function getStaticPaths() {
   const { totalPages } = getPaginatedPosts('blog', 1);
 
-  const paths = Array.from({ length: totalPages }, (_, i) => ({
-    params: { page: String(i + 1) },
+  // Create paths for all pages except page 1
+  const paths = Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { page: String(i + 2) }, // Start from page 2
   }));
 
   return {
@@ -57,8 +59,29 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { page: string } }) {
-  const page = parseInt(params.page);
-  const { currentPage, posts, totalPages } = getPaginatedPosts('blog', page);
+  const pageNumber = parseInt(params.page, 10);
+
+  // Redirect to /blog if someone tries to access /blog/1
+  if (pageNumber === 1) {
+    return {
+      redirect: {
+        destination: '/blog',
+        permanent: true,
+      },
+    };
+  }
+
+  const { posts, currentPage, totalPages } = getPaginatedPosts(
+    'blog',
+    pageNumber
+  );
+
+  // Handle invalid page numbers
+  if (!posts.length) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {

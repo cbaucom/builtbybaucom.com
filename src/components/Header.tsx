@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
-import { Code2, PenTool, Mail } from 'lucide-react';
+import { Code2, PenTool, Mail, FolderGit } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 const HeaderWrapper = styled.header`
@@ -14,13 +14,14 @@ const HeaderWrapper = styled.header`
 `;
 
 const Nav = styled.div`
-  margin: 0 auto;
-  max-width: ${(props) => props.theme.breakpoints.xl};
+  display: flex;
+  flex-direction: column;
+  gap: ${(props) => props.theme.space.md};
 
-  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
-    display: flex;
-    flex-direction: column;
-    gap: ${(props) => props.theme.space.md};
+  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    margin: 0 auto;
+    max-width: ${(props) => props.theme.breakpoints.xl};
+    padding: 0 ${(props) => props.theme.space.lg};
   }
 `;
 
@@ -110,21 +111,21 @@ export const Header = () => {
         {/* Desktop Navigation */}
         <DesktopNav>
           <Logo>
-            <Link href='/'>
+            <Link href="/">
               <Code2 size={24} />
               <span>Built by Baucom</span>
             </Link>
           </Logo>
           <NavLinks>
-            <Link href='/projects/1'>
-              <PenTool size={18} />
+            <Link href="/projects/1">
+              <FolderGit size={18} />
               <span>Projects</span>
             </Link>
-            <Link href='/blog/page/1'>
+            <Link href="/blog">
               <PenTool size={18} />
               <span>Blog</span>
             </Link>
-            <Link href='/contact'>
+            <Link href="/contact">
               <Mail size={18} />
               <span>Contact</span>
             </Link>
@@ -136,7 +137,7 @@ export const Header = () => {
         <MobileNav>
           <TopRow>
             <Logo>
-              <Link href='/'>
+              <Link href="/">
                 <Code2 size={24} />
                 <span>Built by Baucom</span>
               </Link>
@@ -144,15 +145,15 @@ export const Header = () => {
             <ThemeToggle />
           </TopRow>
           <NavLinks>
-            <Link href='/projects/1'>
-              <PenTool size={18} />
+            <Link href="/projects/1">
+              <FolderGit size={18} />
               <span>Projects</span>
             </Link>
-            <Link href='/blog/page/1'>
+            <Link href="/blog">
               <PenTool size={18} />
               <span>Blog</span>
             </Link>
-            <Link href='/contact'>
+            <Link href="/contact">
               <Mail size={18} />
               <span>Contact</span>
             </Link>

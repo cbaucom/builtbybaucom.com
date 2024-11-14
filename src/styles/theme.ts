@@ -2,8 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 
 export const lightTheme = {
   colors: {
-    primary: '#005198',
-    secondary: '#3b82f6',
+    primary: '#94bae9',
+    secondary: '#005198',
     text: '#1f2937',
     background: '#ffffff',
     muted: '#6b7280',
@@ -26,6 +26,7 @@ export const lightTheme = {
     '5xl': '3rem',
   },
   space: {
+    xxs: '0.25rem',
     xs: '0.5rem',
     sm: '1rem',
     md: '1.5rem',
@@ -67,6 +68,7 @@ export const darkTheme = {
     '5xl': '3rem',
   },
   space: {
+    xxs: '0.25rem',
     xs: '0.5rem',
     sm: '1rem',
     md: '1.5rem',

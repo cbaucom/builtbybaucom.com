@@ -3,7 +3,7 @@ import { ContactForm } from '@/components/ContactForm';
 
 const Container = styled.div`
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 768px;
 `;
 
 const Title = styled.h1`

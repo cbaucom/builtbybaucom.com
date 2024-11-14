@@ -1,11 +1,12 @@
 import styled from 'styled-components';
-import { Briefcase, PenTool, Mail } from 'lucide-react';
+import { FolderGit, PenTool, Mail } from 'lucide-react';
 import { getAllPosts } from '@/lib/mdx';
 import { ContactForm } from '@/components/ContactForm';
 import { PostCard } from '@/components/PostCard';
 import type { Post } from '@/lib/mdx';
 import { Button } from '@/components/Button';
 import { useRouter } from 'next/router';
+import { ButtonContainer } from '@/styles/common';
 
 const Hero = styled.section`
   margin-bottom: ${(props) => props.theme.space['2xl']};
@@ -32,7 +33,7 @@ const Subtitle = styled.p`
   color: ${(props) => props.theme.colors.muted};
   font-size: ${(props) => props.theme.fontSizes.xl};
   margin: 0 auto;
-  max-width: 600px;
+  max-width: 768px;
 `;
 
 const Section = styled.section`
@@ -84,7 +85,7 @@ export default function Home({ latestPosts, latestProjects }: HomeProps) {
 
       <Section>
         <SectionTitle>
-          <Briefcase />
+          <FolderGit />
           Latest Projects
         </SectionTitle>
         <Grid>
@@ -92,6 +93,11 @@ export default function Home({ latestPosts, latestProjects }: HomeProps) {
             <PostCard key={project.slug} post={project} type="project" />
           ))}
         </Grid>
+        <ButtonContainer>
+          <Button onClick={() => router.push('/projects/1')}>
+            See more projects
+          </Button>
+        </ButtonContainer>
       </Section>
 
       <Section>
@@ -104,9 +110,11 @@ export default function Home({ latestPosts, latestProjects }: HomeProps) {
             <PostCard key={post.slug} post={post} type="blog" />
           ))}
         </Grid>
-        <Button onClick={() => router.push('/blog')}>
-          Check out other blog posts
-        </Button>
+        <ButtonContainer>
+          <Button onClick={() => router.push('/blog')}>
+            Check out other blog posts
+          </Button>
+        </ButtonContainer>
       </Section>
 
       <ContactSection>

@@ -12,6 +12,12 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
 }
 
+const IconWrapper = styled.span`
+  display: inline-flex;
+  align-items: center;
+  transition: transform 0.75s ease;
+`;
+
 const StyledButton = styled.button<{
   $fullWidth?: boolean;
   $variant: ButtonVariant;
@@ -32,10 +38,28 @@ const StyledButton = styled.button<{
   justify-content: center;
   line-height: 1.5;
   min-height: 2.5rem;
+  overflow: hidden;
   padding: ${(props) => props.theme.space.sm} ${(props) => props.theme.space.md};
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.75s ease;
   width: ${(props) => (props.$fullWidth ? '100%' : 'fit-content')};
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transform: skewX(-25deg);
+    transition: all 0.75s ease;
+  }
 
   &:hover {
     background: ${(props) => {
@@ -50,7 +74,17 @@ const StyledButton = styled.button<{
           return props.theme.colors.secondary;
       }
     }};
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px
+      ${(props) => `${props.theme.colors[props.$variant]}40`};
+
+    &::before {
+      left: 125%;
+    }
+
+    ${IconWrapper} {
+      transform: translateX(2px);
+    }
   }
 
   &:focus-visible {
@@ -60,6 +94,25 @@ const StyledButton = styled.button<{
 
   &:active {
     transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+  }
+
+  &:active::after {
+    animation: ripple 0.6s ease-out;
   }
 
   &:disabled {
@@ -67,6 +120,12 @@ const StyledButton = styled.button<{
     cursor: not-allowed;
     opacity: 0.7;
     transform: none;
+    box-shadow: none;
+
+    &::before,
+    &::after {
+      display: none;
+    }
   }
 
   ${(props) =>
@@ -75,6 +134,7 @@ const StyledButton = styled.button<{
       &:hover {
         background: ${props.theme.colors.muted};
         transform: none;
+        box-shadow: none;
       }
     `}
 
@@ -83,11 +143,21 @@ const StyledButton = styled.button<{
     padding: ${(props) => props.theme.space.xs}
       ${(props) => props.theme.space.sm};
   }
-`;
 
-const IconWrapper = styled.span`
-  display: inline-flex;
-  align-items: center;
+  @keyframes ripple {
+    0% {
+      transform: scale(0, 0);
+      opacity: 0.5;
+    }
+    20% {
+      transform: scale(25, 25);
+      opacity: 0.3;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(40, 40);
+    }
+  }
 `;
 
 const LoadingSpinner = styled.div`
