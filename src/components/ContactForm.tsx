@@ -20,6 +20,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
+  background: ${(props) => props.theme.colors.background};
   border: 1px solid ${(props) => props.theme.colors.accent};
   border-radius: 4px;
   font-size: ${(props) => props.theme.fontSizes.md};
@@ -32,6 +33,7 @@ const Input = styled.input`
 `;
 
 const Textarea = styled.textarea`
+  background: ${(props) => props.theme.colors.background};
   border: 1px solid ${(props) => props.theme.colors.accent};
   border-radius: 4px;
   font-size: ${(props) => props.theme.fontSizes.md};
@@ -59,7 +61,7 @@ const InlineFormWrapper = styled.div`
   }
 `;
 
-const Message = styled.div<{ type: 'success' | 'error' }>`
+const Message = styled.div<{ type: 'error' | 'success' }>`
   background: ${(props) =>
     props.type === 'success' ? props.theme.colors.accent : '#fee2e2'};
   border-radius: 4px;
@@ -75,13 +77,13 @@ interface ContactFormProps {
 
 export const ContactForm = ({ className }: ContactFormProps) => {
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
-    subject: '',
     message: '',
+    name: '',
+    subject: ''
   });
   const [status, setStatus] = useState<{
-    type: 'success' | 'error';
+    type: 'error' | 'success';
     message: string;
   } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -96,14 +98,15 @@ export const ContactForm = ({ className }: ContactFormProps) => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setStatus({
-        type: 'success',
         message: "Message sent successfully! I'll get back to you soon.",
+        type: 'success'
       });
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ email: '', message: '', name: '', subject: '' });
     } catch (error) {
+      console.error('Error sending message:', error);
       setStatus({
-        type: 'error',
         message: 'Failed to send message. Please try again.',
+        type: 'error'
       });
     } finally {
       setIsSubmitting(false);
@@ -119,26 +122,26 @@ export const ContactForm = ({ className }: ContactFormProps) => {
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
-              type="text"
-              value={formData.name}
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
               placeholder="Your name"
               required
+              type="text"
+              value={formData.name}
             />
           </FormGroup>
           <FormGroup>
             <Label htmlFor="email">Email</Label>
             <Input
               id="email"
-              type="email"
-              value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
               }
               placeholder="Your email"
               required
+              type="email"
+              value={formData.email}
             />
           </FormGroup>
         </InlineFormWrapper>
@@ -146,25 +149,25 @@ export const ContactForm = ({ className }: ContactFormProps) => {
           <Label htmlFor="subject">Subject</Label>
           <Input
             id="subject"
-            type="text"
-            value={formData.subject}
             onChange={(e) =>
               setFormData({ ...formData, subject: e.target.value })
             }
             placeholder="Subject"
             required
+            type="text"
+            value={formData.subject}
           />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="message">Message</Label>
           <Textarea
             id="message"
-            value={formData.message}
             onChange={(e) =>
               setFormData({ ...formData, message: e.target.value })
             }
             placeholder="Your message..."
             required
+            value={formData.message}
           />
         </FormGroup>
         <ButtonContainer>

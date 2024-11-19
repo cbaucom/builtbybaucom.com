@@ -9,8 +9,6 @@ tags: ['design', 'development', 'php', 'mysql', 'javascript', 'laravel', 'rwd']
 
 TriaSys Technologies is a leading provider of innovative signal processing solutions for use in Signals Intelligence and Electronic Warfare applications.
 
-![Triasys website](https://res.cloudinary.com/crbaucom/image/upload/v1549036941/crbaucom-images/ttc-mockup-home.png)
-
 I started working for TriaSys in 2007. I noticed that the company website was out-dated, boring, and straight up ugly! It had a fixed width of 600 pixels and used inline styles everywhere!
 
 ![Triasys website](https://res.cloudinary.com/crbaucom/image/upload/v1549036941/crbaucom-images/ttc-webpage-2007.png)

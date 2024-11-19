@@ -4,11 +4,12 @@ import { Code2, PenTool, Mail, FolderGit } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 const HeaderWrapper = styled.header`
-  border-bottom: 1px solid ${(props) => props.theme.colors.muted};
+  background: ${(props) => props.theme.colors.background};
   padding: ${(props) => props.theme.space.sm};
   padding-bottom: ${(props) => props.theme.space.xs};
 
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    border-bottom: 1px solid ${(props) => props.theme.colors.muted};
     padding: ${(props) => props.theme.space.md};
   }
 `;
@@ -17,6 +18,7 @@ const Nav = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${(props) => props.theme.space.md};
+  padding: 0;
 
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     margin: 0 auto;
@@ -48,22 +50,28 @@ const Logo = styled.div`
 
 const NavLinks = styled.div`
   align-items: center;
+  background: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.background};
   display: flex;
   gap: ${(props) => props.theme.space.md};
   justify-content: space-between;
+  margin-left: 50%;
+  padding: 0 1rem;
+  transform: translateX(-50%);
+  width: 100vw;
 
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+    background: ${(props) => props.theme.colors.background};
     margin-left: auto;
-  }
-
-  @media (min-width: ${(props) => props.theme.breakpoints.md}) {
     padding-top: ${(props) => props.theme.space.xs};
+    transform: initial;
+    width: auto;
   }
 
   a {
     align-items: center;
     border-radius: 4px;
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme.colors.background};
     display: flex;
     font-weight: 500;
     gap: ${(props) => props.theme.space.xs};
@@ -75,8 +83,9 @@ const NavLinks = styled.div`
       color: ${(props) => props.theme.colors.primary};
     }
 
-    @media (min-width: ${(props) => props.theme.breakpoints.sm}) {
-      font-size: ${(props) => props.theme.fontSizes.sm};
+    @media (min-width: ${(props) => props.theme.breakpoints.md}) {
+      color: ${(props) => props.theme.colors.text};
+      font-size: ${(props) => props.theme.fontSizes.md};
       padding: ${(props) => props.theme.space.xs}
         ${(props) => props.theme.space.sm} ${(props) => props.theme.space.xs};
     }

@@ -25,7 +25,7 @@ export const ThemeToggle = () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <Button onClick={toggleTheme} aria-label="Toggle theme">
+    <Button aria-label="Toggle theme" onClick={toggleTheme}>
       {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
     </Button>
   );

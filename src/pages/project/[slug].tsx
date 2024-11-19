@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { format } from 'date-fns';
-import { Calendar, Clock, Tag } from 'lucide-react';
-import { getFiles, getPost, getAllPosts, getAdjacentPosts } from '@/lib/mdx';
-import { MDXRemote } from 'next-mdx-remote';
+import { Calendar, Clock } from 'lucide-react';
+import { getPost, getAllPosts, getAdjacentPosts, Post } from '@/lib/mdx';
+import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import { YouTube } from '@/components/YouTube';
@@ -11,7 +11,7 @@ import Image from 'next/image';
 
 const Article = styled.article`
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 920px;
 `;
 
 const HeroImage = styled.div`
@@ -59,9 +59,9 @@ const Tags = styled.div`
 `;
 
 const TagItem = styled.span`
-  background: ${(props) => props.theme.colors.accent};
+  background: ${(props) => props.theme.colors.primary};
   border-radius: 4px;
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.text};
   font-size: ${(props) => props.theme.fontSizes.sm};
   padding: 2px 8px;
 `;
@@ -87,7 +87,7 @@ const Content = styled.div`
   }
 
   pre {
-    background: ${(props) => props.theme.colors.accent};
+    background: ${(props) => props.theme.colors.primary};
     border-radius: 8px;
     margin: ${(props) => props.theme.space.md} 0;
     overflow-x: auto;
@@ -113,7 +113,19 @@ const Content = styled.div`
   }
 `;
 
-export default function ProjectPost({ mdxSource, next, post, previous }: any) {
+type ProjectPostProps = {
+  mdxSource: MDXRemoteSerializeResult;
+  next: Post;
+  post: Post;
+  previous: Post;
+};
+
+export default function ProjectPost({
+  mdxSource,
+  next,
+  post,
+  previous
+}: ProjectPostProps) {
   const date = format(new Date(post.date), 'MMMM dd, yyyy');
 
   return (
@@ -121,11 +133,11 @@ export default function ProjectPost({ mdxSource, next, post, previous }: any) {
       {post.cover_image && (
         <HeroImage>
           <Image
-            src={post.cover_image}
             alt={post.title}
             fill
-            style={{ objectFit: 'cover' }}
             priority
+            src={post.cover_image}
+            style={{ objectFit: 'cover' }}
           />
         </HeroImage>
       )}
@@ -150,7 +162,7 @@ export default function ProjectPost({ mdxSource, next, post, previous }: any) {
       <Content>
         <MDXRemote {...mdxSource} components={{ YouTube }} />
       </Content>
-      <PostNavigation previous={previous} next={next} type="project" />
+      <PostNavigation next={next} previous={previous} type="project" />
     </Article>
   );
 }
@@ -158,12 +170,12 @@ export default function ProjectPost({ mdxSource, next, post, previous }: any) {
 export async function getStaticPaths() {
   const posts = getAllPosts('project');
   const paths = posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.slug }
   }));
 
   return {
-    paths,
     fallback: false,
+    paths
   };
 }
 
@@ -172,24 +184,24 @@ export async function getStaticProps({ params }: { params: { slug: string } }) {
 
   if (!post) {
     return {
-      notFound: true,
+      notFound: true
     };
   }
 
   const mdxSource = await serialize(post.content, {
     mdxOptions: {
       rehypePlugins: [],
-      remarkPlugins: [remarkGfm],
-    },
+      remarkPlugins: [remarkGfm]
+    }
   });
 
   const adjacentPosts = getAdjacentPosts('project', params.slug);
 
   return {
     props: {
-      post,
       mdxSource,
-      ...adjacentPosts,
-    },
+      post,
+      ...adjacentPosts
+    }
   };
 }

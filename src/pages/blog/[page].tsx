@@ -25,7 +25,7 @@ interface BlogPageProps {
 export default function BlogPage({
   currentPage,
   posts,
-  totalPages,
+  totalPages
 }: BlogPageProps) {
   return (
     <>
@@ -36,9 +36,9 @@ export default function BlogPage({
         ))}
       </Grid>
       <Pagination
+        basePath="/blog"
         currentPage={currentPage}
         totalPages={totalPages}
-        basePath="/blog"
       />
     </>
   );
@@ -49,12 +49,12 @@ export async function getStaticPaths() {
 
   // Create paths for all pages except page 1
   const paths = Array.from({ length: totalPages - 1 }, (_, i) => ({
-    params: { page: String(i + 2) }, // Start from page 2
+    params: { page: String(i + 2) } // Start from page 2
   }));
 
   return {
-    paths,
     fallback: false,
+    paths
   };
 }
 
@@ -66,8 +66,8 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
     return {
       redirect: {
         destination: '/blog',
-        permanent: true,
-      },
+        permanent: true
+      }
     };
   }
 
@@ -79,15 +79,15 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
   // Handle invalid page numbers
   if (!posts.length) {
     return {
-      notFound: true,
+      notFound: true
     };
   }
 
   return {
     props: {
-      posts,
       currentPage,
-      totalPages,
-    },
+      posts,
+      totalPages
+    }
   };
 }

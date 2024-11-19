@@ -25,7 +25,7 @@ interface ProjectsPageProps {
 export default function ProjectsPage({
   currentPage,
   posts,
-  totalPages,
+  totalPages
 }: ProjectsPageProps) {
   return (
     <>
@@ -36,9 +36,9 @@ export default function ProjectsPage({
         ))}
       </Grid>
       <Pagination
+        basePath="/projects"
         currentPage={currentPage}
         totalPages={totalPages}
-        basePath="/projects"
       />
     </>
   );
@@ -48,12 +48,12 @@ export async function getStaticPaths() {
   const { totalPages } = getPaginatedPosts('project', 1);
 
   const paths = Array.from({ length: totalPages }, (_, i) => ({
-    params: { page: String(i + 1) },
+    params: { page: String(i + 1) }
   }));
 
   return {
-    paths,
     fallback: false,
+    paths
   };
 }
 
@@ -63,9 +63,9 @@ export async function getStaticProps({ params }: { params: { page: string } }) {
 
   return {
     props: {
-      posts,
       currentPage,
-      totalPages,
-    },
+      posts,
+      totalPages
+    }
   };
 }

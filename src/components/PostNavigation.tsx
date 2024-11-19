@@ -26,6 +26,11 @@ const NavLink = styled.a`
   &:hover {
     background: ${(props) => props.theme.colors.accent};
     border-color: ${(props) => props.theme.colors.primary};
+
+    /* target the label and title */
+    span {
+      color: ${(props) => props.theme.colors.primary};
+    }
   }
 
   &.previous {
@@ -70,7 +75,7 @@ interface PostNavigationProps {
 export const PostNavigation = ({
   next,
   previous,
-  type,
+  type
 }: PostNavigationProps) => {
   return (
     <Nav>
@@ -81,10 +86,10 @@ export const PostNavigation = ({
               ? `/blog/${format(new Date(next.date), 'yyyy')}/${next.slug}`
               : `/project/${next.slug}`
           }
-          passHref
           legacyBehavior
+          passHref
         >
-          <NavLink className='next'>
+          <NavLink className="next">
             <ChevronLeft size={20} />
             <LinkContent>
               <Label>Next {type}</Label>
@@ -97,15 +102,13 @@ export const PostNavigation = ({
         <Link
           href={
             type === 'blog'
-              ? `/blog/${format(new Date(previous.date), 'yyyy')}/${
-                  previous.slug
-                }`
+              ? `/blog/${format(new Date(previous.date), 'yyyy')}/${previous.slug}`
               : `/project/${previous.slug}`
           }
-          passHref
           legacyBehavior
+          passHref
         >
-          <NavLink className='previous'>
+          <NavLink className="previous">
             <LinkContent>
               <Label>Previous {type}</Label>
               <Title>{previous.title}</Title>

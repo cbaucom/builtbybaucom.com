@@ -134,8 +134,8 @@ export async function getStaticProps() {
 
   return {
     props: {
-      latestProjects,
       latestPosts,
-    },
+      latestProjects
+    }
   };
 }

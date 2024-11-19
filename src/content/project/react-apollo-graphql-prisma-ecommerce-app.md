@@ -16,6 +16,7 @@ tags: ['javascript', 'react', 'graphql', 'apollo', 'stripe']
 #### Frontend
 
 - **React.js**
+
   - For building the interface along with:
     - **Next.js** for server side rendering, routing and tooling
     - **Styled Components** for styling
@@ -67,4 +68,3 @@ tags: ['javascript', 'react', 'graphql', 'apollo', 'stripe']
 - Custom 404 page
 
 Check out the source on Github - [Frontend](https://github.com/cbaucom/fullstack-react-kooziemadness-frontend) and [Backend](https://github.com/cbaucom/fullstack-react-kooziemadness-backend)
-

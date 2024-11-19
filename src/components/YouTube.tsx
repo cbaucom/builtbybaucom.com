@@ -25,10 +25,10 @@ export const YouTube = ({ id }: YouTubeProps) => {
   return (
     <VideoContainer>
       <IFrame
-        src={`https://www.youtube.com/embed/${id}`}
-        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        title='YouTube video player'
+        src={`https://www.youtube.com/embed/${id}`}
+        title="YouTube video player"
       />
     </VideoContainer>
   );

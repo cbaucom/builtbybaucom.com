@@ -17,8 +17,7 @@ const PageLink = styled.a<{ $active?: boolean }>`
     ${(props) =>
       props.$active ? props.theme.colors.primary : props.theme.colors.accent};
   border-radius: 8px;
-  color: ${(props) =>
-    props.$active ? props.theme.colors.background : props.theme.colors.text};
+  color: ${(props) => props.theme.colors.text};
   cursor: pointer;
   display: flex;
   height: 40px;
@@ -42,19 +41,19 @@ interface PaginationProps {
 export const Pagination = ({
   basePath,
   currentPage,
-  totalPages,
+  totalPages
 }: PaginationProps) => {
   const getPageUrl = (page: number) => {
     if (page === 1) {
-      return '/blog';
+      return basePath;
     }
-    return `/blog/${page}`;
+    return `${basePath}/${page}`;
   };
 
   return (
     <Nav>
       {currentPage > 1 && (
-        <Link href={getPageUrl(currentPage - 1)} passHref legacyBehavior>
+        <Link href={getPageUrl(currentPage - 1)} legacyBehavior passHref>
           <PageLink>
             <ChevronLeft size={20} />
           </PageLink>
@@ -62,13 +61,13 @@ export const Pagination = ({
       )}
 
       {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-        <Link key={page} href={getPageUrl(page)} passHref legacyBehavior>
+        <Link href={getPageUrl(page)} key={page} legacyBehavior passHref>
           <PageLink $active={page === currentPage}>{page}</PageLink>
         </Link>
       ))}
 
       {currentPage < totalPages && (
-        <Link href={getPageUrl(currentPage + 1)} passHref legacyBehavior>
+        <Link href={getPageUrl(currentPage + 1)} legacyBehavior passHref>
           <PageLink>
             <ChevronRight size={20} />
           </PageLink>

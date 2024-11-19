@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme, GlobalStyle } from '@/styles/theme';
 
-type Theme = 'light' | 'dark';
+type Theme = 'dark' | 'light';
 
 interface ThemeContextType {
   theme: Theme;
@@ -13,7 +13,7 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType>({
   theme: 'light',
-  toggleTheme: () => null,
+  toggleTheme: () => null
 });
 
 export const useTheme = () => useContext(ThemeContext);

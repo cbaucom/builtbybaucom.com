@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { forwardRef } from 'react';
 
-type ButtonVariant = 'primary' | 'secondary' | 'accent';
+type ButtonVariant = 'accent' | 'primary' | 'secondary';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -29,7 +29,7 @@ const StyledButton = styled.button<{
   color: ${(props) =>
     props.$variant === 'accent'
       ? props.theme.colors.primary
-      : props.theme.colors.background};
+      : props.theme.colors.text};
   cursor: pointer;
   display: inline-flex;
   font-size: ${(props) => props.theme.fontSizes.md};
@@ -74,6 +74,8 @@ const StyledButton = styled.button<{
           return props.theme.colors.secondary;
       }
     }};
+    color: ${(props) => props.theme.colors.text};
+
     transform: translateY(-2px);
     box-shadow: 0 4px 12px
       ${(props) => `${props.theme.colors[props.$variant]}40`};
@@ -117,6 +119,7 @@ const StyledButton = styled.button<{
 
   &:disabled {
     background: ${(props) => props.theme.colors.muted};
+    color: ${(props) => props.theme.colors.text};
     cursor: not-allowed;
     opacity: 0.7;
     transform: none;
@@ -180,8 +183,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     {
       children,
       fullWidth = false,
-      isLoading = false,
       leftIcon,
+      isLoading = false,
       rightIcon,
       variant = 'primary',
       disabled,
@@ -191,10 +194,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     return (
       <StyledButton
-        ref={ref}
         $fullWidth={fullWidth}
         $variant={variant}
         disabled={disabled || isLoading}
+        ref={ref}
         {...props}
       >
         {isLoading ? (

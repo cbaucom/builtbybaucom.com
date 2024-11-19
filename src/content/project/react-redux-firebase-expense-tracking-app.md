@@ -11,8 +11,6 @@ tags: ['javascript', 'react', 'redux', 'firebase']
 
 This expense tracking app is designed to store and show users' expenses each month.
 
-![Expensify App mockup](https://res.cloudinary.com/crbaucom/image/upload/v1546543786/crbaucom-images/expensify-mockup.png)
-
 ### Technologies
 
 - JavaScript - ECMAScript 6

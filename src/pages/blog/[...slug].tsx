@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { format } from 'date-fns';
-import { Calendar, Clock, Tag } from 'lucide-react';
+import { Calendar, Clock } from 'lucide-react';
 import {
   getAllPosts,
   getBlogPostByYearAndSlug,
   Post,
-  getAdjacentPosts,
+  getAdjacentPosts
 } from '@/lib/mdx';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
@@ -15,7 +15,7 @@ import Image from 'next/image';
 
 const Article = styled.article`
   margin: 0 auto;
-  max-width: 800px;
+  max-width: 920px;
 `;
 
 const HeroImage = styled.div`
@@ -65,7 +65,7 @@ const Tags = styled.div`
 const TagItem = styled.span`
   background: ${(props) => props.theme.colors.primary};
   border-radius: 4px;
-  color: ${(props) => props.theme.colors.background};
+  color: ${(props) => props.theme.colors.text};
   font-size: ${(props) => props.theme.fontSizes.sm};
   padding: 2px 8px;
 `;
@@ -136,7 +136,7 @@ export default function BlogPost({
   mdxSource,
   next,
   post,
-  previous,
+  previous
 }: BlogPostProps) {
   const date = format(new Date(post.date), 'MMMM dd, yyyy');
 
@@ -145,11 +145,11 @@ export default function BlogPost({
       {post.cover_image && (
         <HeroImage>
           <Image
-            src={post.cover_image}
             alt={post.title}
             fill
-            style={{ objectFit: 'cover' }}
             priority
+            src={post.cover_image}
+            style={{ objectFit: 'cover' }}
           />
         </HeroImage>
       )}
@@ -174,7 +174,7 @@ export default function BlogPost({
       <Content>
         <MDXRemote {...mdxSource} components={{ YouTube }} />
       </Content>
-      <PostNavigation previous={previous} next={next} type="blog" />
+      <PostNavigation next={next} previous={previous} type="blog" />
     </Article>
   );
 }
@@ -184,18 +184,18 @@ export async function getStaticPaths() {
 
   const paths = posts.map((post) => ({
     params: {
-      slug: [format(new Date(post.date), 'yyyy'), post.slug],
-    },
+      slug: [format(new Date(post.date), 'yyyy'), post.slug]
+    }
   }));
 
   return {
-    paths,
     fallback: false,
+    paths
   };
 }
 
 export async function getStaticProps({
-  params,
+  params
 }: {
   params: { slug: string[] };
 }) {
@@ -204,7 +204,7 @@ export async function getStaticProps({
 
   if (!post) {
     return {
-      notFound: true,
+      notFound: true
     };
   }
 
@@ -213,9 +213,9 @@ export async function getStaticProps({
 
   return {
     props: {
-      post,
       mdxSource,
-      ...adjacentPosts,
-    },
+      post,
+      ...adjacentPosts
+    }
   };
 }

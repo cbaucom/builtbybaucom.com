@@ -7,12 +7,12 @@ cover_image: 'https://res.cloudinary.com/crbaucom/image/upload/v1731515300/crbau
 tags: ['javascript', 'react', 'gatsbyjs']
 ---
 
-![Website mockup](https://res.cloudinary.com/crbaucom/image/upload/v1561139872/crbaucom-images/darkhorse-mockup-1.png)*Caption text*
+![Website mockup](https://res.cloudinary.com/crbaucom/image/upload/v1561139872/crbaucom-images/darkhorse-mockup-1.png)
 
 Dark Horse Charters offers fishing charters in and around Newburyport, Massachusetts. George and the FV Dark Horse team needed a website to display their charter information and allow customers to request to book a charter through a form. It's built with [GatsbyJS](https://www.gatsbyjs.org/) and deployed on [Netlify](https://netlify.com/).
 
 It scores pretty well on Google's Lighthouse Audit, too!
 
-![Website lighthouse score](https://res.cloudinary.com/crbaucom/image/upload/v1561140472/crbaucom-images/darkhorse-lighthouse-1.png)*Lighthouse score*
+![Website lighthouse score](https://res.cloudinary.com/crbaucom/image/upload/v1561140472/crbaucom-images/darkhorse-lighthouse-1.png)_Lighthouse score_
 
 [Check it out!](https://darkhorsecharters.com/)

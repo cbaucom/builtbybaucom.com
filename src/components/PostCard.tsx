@@ -58,7 +58,7 @@ const Title = styled.h2`
     color: ${(props) => props.theme.colors.text};
 
     &:hover {
-      color: ${(props) => props.theme.colors.primary};
+      color: ${(props) => props.theme.colors.accent};
     }
   }
 `;
@@ -95,9 +95,9 @@ const Tags = styled.div`
 
 const Tag = styled.span`
   background: ${(props) => props.theme.colors.primary};
+  color: ${(props) => props.theme.colors.text};
   border-radius: 4px;
-  color: ${(props) => props.theme.colors.background};
-  font-size: ${(props) => props.theme.fontSizes.xs};
+  font-size: ${(props) => props.theme.fontSizes.sm};
   padding: 2px 8px;
 `;
 
@@ -119,7 +119,7 @@ export const PostCard = ({ post, type }: PostCardProps) => {
       {cover_image && (
         <Link href={href}>
           <ImageContainer>
-            <CoverImage src={cover_image} alt={post.title} loading="lazy" />
+            <CoverImage alt={post.title} loading="lazy" src={cover_image} />
           </ImageContainer>
         </Link>
       )}

@@ -34,19 +34,19 @@ export const Footer = () => {
     <FooterWrapper>
       <SocialLinks>
         <a
-          href='https://github.com/cbaucom'
-          target='_blank'
-          rel='noopener noreferrer'
+          href="https://github.com/cbaucom"
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <Github size={20} />
         </a>
-        <a href='https://twitter.com' target='_blank' rel='noopener noreferrer'>
+        <a href="https://twitter.com" rel="noopener noreferrer" target="_blank">
           <X size={20} />
         </a>
         <a
-          href='https://linkedin.com'
-          target='_blank'
-          rel='noopener noreferrer'
+          href="https://linkedin.com"
+          rel="noopener noreferrer"
+          target="_blank"
         >
           <Linkedin size={20} />
         </a>

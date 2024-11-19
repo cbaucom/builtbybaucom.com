@@ -17,7 +17,7 @@ const Grid = styled.div`
 `;
 export default function BlogIndexPage({
   posts,
-  totalPages,
+  totalPages
 }: {
   posts: Post[];
   totalPages: number;
@@ -30,7 +30,7 @@ export default function BlogIndexPage({
           <PostCard key={post.slug} post={post} type="blog" />
         ))}
       </Grid>
-      <Pagination currentPage={1} totalPages={totalPages} basePath="/blog" />
+      <Pagination basePath="/blog" currentPage={1} totalPages={totalPages} />
     </>
   );
 }
@@ -41,7 +41,7 @@ export async function getStaticProps() {
   return {
     props: {
       posts,
-      totalPages,
-    },
+      totalPages
+    }
   };
 }
