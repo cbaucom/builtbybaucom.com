@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 import { Code2, PenTool, Mail, FolderGit } from 'lucide-react';
-import { ThemeToggle } from './ThemeToggle';
+import { Lightbulb } from './Lightbulb';
 
 const HeaderWrapper = styled.header`
   background: ${(props) => props.theme.colors.background};
@@ -9,8 +9,8 @@ const HeaderWrapper = styled.header`
   padding-bottom: ${(props) => props.theme.space.xs};
 
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    border-bottom: 1px solid ${(props) => props.theme.colors.muted};
-    padding: ${(props) => props.theme.space.md};
+    padding: ${(props) => props.theme.space.sm}
+      ${(props) => props.theme.space.sm} 0;
   }
 `;
 
@@ -28,30 +28,66 @@ const Nav = styled.div`
 `;
 
 const TopRow = styled.div`
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   justify-content: space-between;
 `;
 
 const Logo = styled.div`
   align-items: center;
+  color: ${(props) => props.theme.colors.text};
   display: flex;
   font-size: ${(props) => props.theme.fontSizes.xl};
   font-weight: 700;
   gap: ${(props) => props.theme.space.xs};
+  height: 60px;
+  padding: ${(props) => props.theme.space.xs};
+  position: relative;
+
+  .shape {
+    stroke-dasharray: 115 150;
+    stroke-dashoffset: 160;
+    stroke-width: 8px;
+    fill: transparent;
+    stroke: ${(props) => props.theme.colors.primary};
+    transition:
+      stroke-width 1.5s,
+      stroke-dashoffset 1.5s,
+      stroke-dasharray 1.5s;
+  }
 
   a {
     align-items: center;
     color: ${(props) => props.theme.colors.text};
     display: flex;
     gap: ${(props) => props.theme.space.xs};
+    padding: 0 ${(props) => props.theme.space.md};
+    position: relative;
+    z-index: 2;
+  }
+
+  svg.logo-svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+  }
+
+  span {
+    color: ${(props) => props.theme.colors.text};
+  }
+
+  .shape:hover {
+    stroke-width: 8px;
+    stroke-dashoffset: 100;
+    stroke-dasharray: 980;
   }
 `;
 
 const NavLinks = styled.div`
-  align-items: center;
+  align-items: flex-start;
   background: ${(props) => props.theme.colors.primary};
-  color: ${(props) => props.theme.colors.background};
+  color: ${(props) => props.theme.colors.text};
   display: flex;
   gap: ${(props) => props.theme.space.md};
   justify-content: space-between;
@@ -71,7 +107,7 @@ const NavLinks = styled.div`
   a {
     align-items: center;
     border-radius: 4px;
-    color: ${(props) => props.theme.colors.background};
+    color: ${(props) => props.theme.colors.text};
     display: flex;
     font-weight: 500;
     gap: ${(props) => props.theme.space.xs};
@@ -96,7 +132,7 @@ const DesktopNav = styled.div`
   display: none;
 
   @media (min-width: ${(props) => props.theme.breakpoints.md}) {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -113,18 +149,33 @@ const MobileNav = styled.div`
   }
 `;
 
+const ThemeToggle = styled.div`
+  align-items: center;
+  display: flex;
+  overflow: visible;
+  position: relative;
+`;
+
 export const Header = () => {
   return (
     <HeaderWrapper>
       <Nav>
         {/* Desktop Navigation */}
         <DesktopNav>
-          <Logo>
-            <Link href="/">
+          <Link href="/">
+            <Logo>
+              <svg
+                className="logo-svg"
+                height="60"
+                width="200"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect className="shape" height="60" width="200" />
+              </svg>
               <Code2 size={24} />
               <span>Built by Baucom</span>
-            </Link>
-          </Logo>
+            </Logo>
+          </Link>
           <NavLinks>
             <Link href="/projects/1">
               <FolderGit size={18} />
@@ -138,20 +189,32 @@ export const Header = () => {
               <Mail size={18} />
               <span>Contact</span>
             </Link>
-            <ThemeToggle />
+            <ThemeToggle>
+              <Lightbulb />
+            </ThemeToggle>
           </NavLinks>
         </DesktopNav>
 
         {/* Mobile Navigation */}
         <MobileNav>
           <TopRow>
-            <Logo>
-              <Link href="/">
+            <Link href="/">
+              <Logo>
+                <svg
+                  className="logo-svg"
+                  height="60"
+                  width="200"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect className="shape" height="60" width="200" />
+                </svg>
                 <Code2 size={24} />
                 <span>Built by Baucom</span>
-              </Link>
-            </Logo>
-            <ThemeToggle />
+              </Logo>
+            </Link>
+            <ThemeToggle>
+              <Lightbulb />
+            </ThemeToggle>
           </TopRow>
           <NavLinks>
             <Link href="/projects/1">
