@@ -4,6 +4,16 @@ import { format } from 'date-fns';
 import { Calendar, Clock } from 'lucide-react';
 import type { Post } from '@/lib/mdx';
 
+const CardWrapper = styled(Link)`
+  display: block;
+  text-decoration: none;
+  width: 100%;
+
+  &:hover {
+    text-decoration: none;
+  }
+`;
+
 const Card = styled.article`
   background: ${(props) => props.theme.colors.background};
   border: 1px solid ${(props) => props.theme.colors.accent};
@@ -16,7 +26,7 @@ const Card = styled.article`
     transform 0.2s ease,
     box-shadow 0.2s ease;
 
-  &:hover {
+  ${CardWrapper}:hover & {
     box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
     transform: translateY(-2px);
   }
@@ -24,7 +34,6 @@ const Card = styled.article`
 
 const ImageContainer = styled.div`
   background: ${(props) => props.theme.colors.accent};
-  cursor: pointer;
   height: 200px;
   overflow: hidden;
   position: relative;
@@ -37,7 +46,7 @@ const CoverImage = styled.img`
   transition: transform 0.3s ease;
   width: 100%;
 
-  ${Card}:hover & {
+  ${CardWrapper}:hover & {
     transform: scale(1.05);
   }
 `;
@@ -50,17 +59,9 @@ const Content = styled.div`
 `;
 
 const Title = styled.h2`
-  cursor: pointer;
   font-size: ${(props) => props.theme.fontSizes['2xl']};
   margin: 0 0 ${(props) => props.theme.space.sm} 0;
-
-  a {
-    color: ${(props) => props.theme.colors.text};
-
-    &:hover {
-      color: ${(props) => props.theme.colors.accent};
-    }
-  }
+  color: ${(props) => props.theme.colors.text};
 `;
 
 const Description = styled.p`
@@ -115,33 +116,31 @@ export const PostCard = ({ post, type }: PostCardProps) => {
       : `/project/${slug}`;
 
   return (
-    <Card>
-      {cover_image && (
-        <Link href={href}>
+    <CardWrapper href={href}>
+      <Card>
+        {cover_image && (
           <ImageContainer>
             <CoverImage alt={post.title} loading="lazy" src={cover_image} />
           </ImageContainer>
-        </Link>
-      )}
-      <Content>
-        <Title>
-          <Link href={href}>{post.title}</Link>
-        </Title>
-        <Tags>
-          {post.tags && post.tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}
-        </Tags>
-        <Description>{post.description}</Description>
-        <Meta>
-          <MetaItem>
-            <Calendar size={16} />
-            {format(new Date(date), 'MMMM dd, yyyy')}
-          </MetaItem>
-          <MetaItem>
-            <Clock size={16} />
-            {readingTime}
-          </MetaItem>
-        </Meta>
-      </Content>
-    </Card>
+        )}
+        <Content>
+          <Title>{post.title}</Title>
+          <Tags>
+            {post.tags && post.tags.map((tag) => <Tag key={tag}>{tag}</Tag>)}
+          </Tags>
+          <Description>{post.description}</Description>
+          <Meta>
+            <MetaItem>
+              <Calendar size={16} />
+              {format(new Date(date), 'MMMM dd, yyyy')}
+            </MetaItem>
+            <MetaItem>
+              <Clock size={16} />
+              {readingTime}
+            </MetaItem>
+          </Meta>
+        </Content>
+      </Card>
+    </CardWrapper>
   );
 };
