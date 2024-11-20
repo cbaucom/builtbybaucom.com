@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Github, Linkedin, X } from 'lucide-react';
+import { Github, Instagram, Linkedin } from 'lucide-react';
 
 const FooterWrapper = styled.footer`
   background: ${(props) => props.theme.colors.background};
@@ -40,11 +40,15 @@ export const Footer = () => {
         >
           <Github size={20} />
         </a>
-        <a href="https://twitter.com" rel="noopener noreferrer" target="_blank">
-          <X size={20} />
+        <a
+          href="https://instagram.com/chrisbaucom"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Instagram size={20} />
         </a>
         <a
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/in/chrisbaucom"
           rel="noopener noreferrer"
           target="_blank"
         >
