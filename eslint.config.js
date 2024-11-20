@@ -1,4 +1,3 @@
-import eslint from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
 import nextPlugin from '@next/eslint-plugin-next';
@@ -15,7 +14,13 @@ export default [
     ignores: ['src/styles/theme.ts', 'src/styles/styled.d.ts'],
     languageOptions: {
       ecmaVersion: 2021,
-      sourceType: 'module',
+      globals: {
+        $: true,
+        document: true,
+        mixpanel: true,
+        process: true,
+        window: true
+      },
       parser: tsparser,
       parserOptions: {
         ecmaFeatures: {
@@ -23,13 +28,7 @@ export default [
           modules: true
         }
       },
-      globals: {
-        $: true,
-        document: true,
-        mixpanel: true,
-        process: true,
-        window: true
-      }
+      sourceType: 'module'
     },
     plugins: {
       '@typescript-eslint': tseslint,

@@ -209,7 +209,7 @@ export async function getStaticProps({
   }
 
   const mdxSource = await serialize(post.content);
-  const adjacentPosts = getAdjacentPosts('blog', slug, year);
+  const adjacentPosts = getAdjacentPosts('blog', slug);
 
   return {
     props: {

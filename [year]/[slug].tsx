@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { format } from 'date-fns';
-import { Calendar, Clock, Tag } from 'lucide-react';
+import { Calendar, Clock } from 'lucide-react';
 import {
   getAllPosts,
   getBlogPostByYearAndSlug,
   Post,
-  getAdjacentPosts,
+  getAdjacentPosts
 } from '@/lib/mdx';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
@@ -127,7 +127,7 @@ export default function BlogPost({
   mdxSource,
   next,
   post,
-  previous,
+  previous
 }: BlogPostProps) {
   const date = format(new Date(post.date), 'MMMM dd, yyyy');
 
@@ -154,7 +154,7 @@ export default function BlogPost({
       <Content>
         <MDXRemote {...mdxSource} components={{ YouTube }} />
       </Content>
-      <PostNavigation previous={previous} next={next} type='blog' />
+      <PostNavigation next={next} previous={previous} type="blog" />
     </Article>
   );
 }
@@ -163,19 +163,19 @@ export async function getStaticPaths() {
   const posts = getAllPosts('blog');
   const paths = posts.map((post) => ({
     params: {
-      year: format(new Date(post.date), 'yyyy'),
       slug: post.slug,
-    },
+      year: format(new Date(post.date), 'yyyy')
+    }
   }));
 
   return {
-    paths,
     fallback: false,
+    paths
   };
 }
 
 export async function getStaticProps({
-  params,
+  params
 }: {
   params: { year: string; slug: string };
 }) {
@@ -183,25 +183,30 @@ export async function getStaticProps({
 
   if (!post) {
     return {
-      notFound: true,
+      notFound: true
     };
   }
 
   const mdxSource = await serialize(post.content, {
     mdxOptions: {
-      remarkPlugins: [remarkGfm, remarkYoutube],
-      rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings, rehypeCodeTitles],
+      rehypePlugins: [
+        rehypeSlug,
+        rehypeAutolinkHeadings,
+        rehypeCodeTitles,
+        rehypeHighlight
+      ],
+      remarkPlugins: [remarkGfm, remarkYoutube]
     },
-    parseFrontmatter: false,
+    parseFrontmatter: false
   });
 
-  const adjacentPosts = getAdjacentPosts('blog', params.slug, params.year);
+  const adjacentPosts = getAdjacentPosts('blog', params.slug);
 
   return {
     props: {
-      post,
       mdxSource,
-      ...adjacentPosts,
-    },
+      post,
+      ...adjacentPosts
+    }
   };
 }
