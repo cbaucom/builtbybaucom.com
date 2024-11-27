@@ -5,8 +5,6 @@ import prettier from 'eslint-plugin-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import sortKeysPlugin from 'eslint-plugin-sort-keys-fix';
-import testingLibrary from 'eslint-plugin-testing-library';
-import jest from 'eslint-plugin-jest';
 
 export default [
   {
@@ -32,13 +30,11 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tseslint,
-      jest,
       next: nextPlugin,
       prettier,
       react,
       'react-hooks': reactHooks,
-      'sort-keys-fix': sortKeysPlugin,
-      'testing-library': testingLibrary
+      'sort-keys-fix': sortKeysPlugin
     },
     rules: {
       '@typescript-eslint/no-unused-vars': [

@@ -12,7 +12,7 @@ if (typeof window !== 'undefined') {
 }
 
 interface StyledLightbulbProps {
-  isLight: boolean;
+  $isLight: boolean;
   theme?: DefaultTheme;
 }
 
@@ -132,7 +132,7 @@ export const Lightbulb = () => {
   }, [toggleTheme]);
 
   return (
-    <StyledLightbulb data-theme={theme} isLight={isLight}>
+    <StyledLightbulb $isLight={isLight} data-theme={theme}>
       <div ref={proxyRef} style={{ display: 'none' }} />
       <svg
         className="toggle-scene"
