@@ -6,9 +6,14 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeCodeTitles from 'rehype-code-titles';
 import path from 'path';
 import bundleAnalyzer from '@next/bundle-analyzer';
+import createRemoteRefresh from 'next-remote-refresh'
 
 const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
+});
+
+const withRemoteRefresh = createRemoteRefresh({
+  paths: [path.join(process.cwd(), 'src/content')],
 });
 
 const mdxConfig = withMDX({
@@ -78,4 +83,4 @@ const nextConfig = {
   },
 };
 
-export default withBundleAnalyzer(mdxConfig(nextConfig));
+export default withRemoteRefresh(withBundleAnalyzer(mdxConfig(nextConfig)));
