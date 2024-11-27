@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { format } from 'date-fns';
 import { Calendar, Clock } from 'lucide-react';
 import type { Post } from '@/lib/mdx';
+import { theme } from '@/styles/theme';
 
 const CardWrapper = styled(Link)`
   display: block;
@@ -131,11 +132,11 @@ export const PostCard = ({ post, type }: PostCardProps) => {
           <Description>{post.description}</Description>
           <Meta>
             <MetaItem>
-              <Calendar size={16} />
+              <Calendar color={theme.colors.accent} size={16} />
               {format(new Date(date), 'MMMM dd, yyyy')}
             </MetaItem>
             <MetaItem>
-              <Clock size={16} />
+              <Clock color={theme.colors.accent} size={16} />
               {readingTime}
             </MetaItem>
           </Meta>

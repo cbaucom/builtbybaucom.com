@@ -4,14 +4,26 @@ import { useTheme } from '@/context/ThemeContext';
 import { lightbulbStyles } from '@/styles/LightbulbStyles';
 import gsap from 'gsap';
 import { Draggable } from 'gsap/dist/Draggable';
+import { DefaultTheme } from 'styled-components/dist/types';
 
 // Register Draggable plugin
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(Draggable);
 }
 
-const StyledLightbulb = styled.div`
+interface StyledLightbulbProps {
+  isLight: boolean;
+  theme?: DefaultTheme;
+}
+
+const StyledLightbulb = styled.div<StyledLightbulbProps>`
   ${lightbulbStyles}
+
+  .toggle-scene__cord {
+    stroke: #4d4d4d;
+    stroke-linecap: round;
+    transform-origin: top;
+  }
 `;
 
 export const Lightbulb = () => {
@@ -20,13 +32,12 @@ export const Lightbulb = () => {
   const hitSpotRef = React.useRef<SVGCircleElement>(null);
   const proxyRef = React.useRef<HTMLDivElement>(null);
   const bulbRef = React.useRef<SVGGElement>(null);
+  const isLight = theme === 'light';
 
   const handleBulbClick = (e: React.MouseEvent) => {
-    // Prevent click from triggering when dragging ends
     if (e.target === hitSpotRef.current) return;
-
     toggleTheme();
-    // Flash animation
+
     gsap.fromTo(
       '.bulb__flash',
       { strokeDashoffset: 200 },
@@ -43,52 +54,85 @@ export const Lightbulb = () => {
 
     if (!cord || !hitSpot || !proxy) return;
 
-    let startY = 0;
+    const dragInstance = Draggable.create(proxy, {
+      bounds: {
+        maxX: 100,
+        maxY: 100,
+        minX: -100,
+        minY: -100
+      },
+      inertia: true,
+      onDrag: function (this: Draggable) {
+        const dx = this.x;
+        const dy = this.y;
 
-    // Initialize draggable
-    Draggable.create(proxy, {
-      onDrag: function () {
-        // Animate cord while dragging
-        gsap.to(cord, {
-          attr: { d: `M98.725 35v${380 + this.y}` },
-          duration: 0.1
+        const midX = dx / 2;
+        const midY = dy / 2 + 450;
+
+        const newPath = `M98.725 35 Q${98.725 + midX} ${midY} ${98.725 + dx} ${380 + dy}`;
+
+        gsap.set(cord, {
+          attr: { d: newPath }
         });
       },
-      onDragEnd: function () {
-        const travelled = Math.abs(this.y - startY);
+      onDragEnd: function (this: Draggable) {
+        const distance = Math.sqrt(this.x * this.x + this.y * this.y);
 
-        // Update the reset position to match initial path
         gsap.to(cord, {
           attr: { d: 'M98.725 35v380' },
-          duration: 0.3,
-          ease: 'power2.out'
+          duration: 0.5,
+          ease: 'elastic.out(1, 0.3)'
         });
 
-        // If pulled far enough, trigger the theme toggle
-        if (travelled > 50) {
+        gsap.to(proxy, {
+          duration: 0.5,
+          ease: 'elastic.out(1, 0.3)',
+          x: 0,
+          y: 0
+        });
+
+        if (distance > 50) {
           toggleTheme();
+
+          gsap.fromTo(
+            '.bulb',
+            {
+              rotation: this.x > 0 ? 15 : -15,
+              transformOrigin: 'top'
+            },
+            {
+              duration: 1.5,
+              ease: 'elastic.out(1, 0.3)',
+              rotation: 0
+            }
+          );
+
           gsap.fromTo(
             '.bulb__flash',
-            { strokeDashoffset: 200 },
-            { duration: 0.3, strokeDashoffset: 0 }
+            {
+              opacity: 1,
+              strokeDashoffset: 200
+            },
+            {
+              duration: 0.3,
+              ease: 'power2.out',
+              opacity: 0.5,
+              strokeDashoffset: 0
+            }
           );
         }
       },
-      onDragStart: function () {
-        startY = this.y;
-      },
       trigger: hitSpot,
-      type: 'y'
-    });
+      type: 'x,y'
+    })[0];
 
-    // Cleanup
     return () => {
-      Draggable.get(proxy)?.kill();
+      dragInstance.kill();
     };
   }, [toggleTheme]);
 
   return (
-    <StyledLightbulb data-theme={theme}>
+    <StyledLightbulb data-theme={theme} isLight={isLight}>
       <div ref={proxyRef} style={{ display: 'none' }} />
       <svg
         className="toggle-scene"

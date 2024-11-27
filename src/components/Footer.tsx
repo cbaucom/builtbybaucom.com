@@ -3,7 +3,6 @@ import { Github, Instagram, Linkedin } from 'lucide-react';
 
 const FooterWrapper = styled.footer`
   background: ${(props) => props.theme.colors.background};
-  border-top: 1px solid ${(props) => props.theme.colors.accent};
   padding: ${(props) => props.theme.space.md};
   text-align: center;
 `;
@@ -19,7 +18,7 @@ const SocialLinks = styled.div`
     transition: color 0.2s ease;
 
     &:hover {
-      color: ${(props) => props.theme.colors.primary};
+      color: ${(props) => props.theme.colors.accent};
     }
   }
 `;

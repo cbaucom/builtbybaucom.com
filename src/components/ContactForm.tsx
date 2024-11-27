@@ -23,6 +23,7 @@ const Input = styled.input`
   background: ${(props) => props.theme.colors.background};
   border: 1px solid ${(props) => props.theme.colors.accent};
   border-radius: 4px;
+  color: ${(props) => props.theme.colors.text};
   font-size: ${(props) => props.theme.fontSizes.md};
   padding: ${(props) => props.theme.space.sm};
 
@@ -36,6 +37,7 @@ const Textarea = styled.textarea`
   background: ${(props) => props.theme.colors.background};
   border: 1px solid ${(props) => props.theme.colors.accent};
   border-radius: 4px;
+  color: ${(props) => props.theme.colors.text};
   font-size: ${(props) => props.theme.fontSizes.md};
   min-height: 150px;
   padding: ${(props) => props.theme.space.sm};

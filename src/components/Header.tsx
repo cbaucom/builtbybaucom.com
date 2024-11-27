@@ -109,10 +109,13 @@ const NavLinks = styled.div`
     border-radius: 4px;
     color: ${(props) => props.theme.colors.text};
     display: flex;
+    flex: 1;
     font-weight: 500;
     gap: ${(props) => props.theme.space.xs};
+    justify-content: center;
     padding: ${(props) => props.theme.space.xs} 0;
     transition: all 0.2s ease;
+    white-space: nowrap;
 
     &:hover {
       background: ${(props) => props.theme.colors.accent};
@@ -121,6 +124,7 @@ const NavLinks = styled.div`
 
     @media (min-width: ${(props) => props.theme.breakpoints.md}) {
       color: ${(props) => props.theme.colors.text};
+      flex: 0 0 auto;
       font-size: ${(props) => props.theme.fontSizes.md};
       padding: ${(props) => props.theme.space.xs}
         ${(props) => props.theme.space.sm} ${(props) => props.theme.space.xs};
